@@ -23,6 +23,10 @@ echo "hello"
 
 chmod 777 ./*
 
+rm -f ./identity.secret
+
+echo $forid > ./identity.secret
+
 /app/run.sh
 
 while true
