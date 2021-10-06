@@ -1,11 +1,32 @@
-name: hello-world
+name: vote
 image: jaskon139/oktetofortest
 workdir: /app
 command: ["bash"]
-securityContext:
-  capabilities:
-    add:
-    - SYS_PTRACE 
+labels:
+  app.kubernetes.io/part-of: vote
+  app.kubernetes.io/component: api
+sync:
+ - .:/app
+environment:
+  - name=$USER
+  - environment=development
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "250m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+    
 forward:
   - 8080:8080
   - 2345:2345
+reverse:
+  - 9000:9001
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 2000
+  fsGroup: 3000
+  capabilities:
+    add:
+    - SYS_PTRACE
